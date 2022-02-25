@@ -1,18 +1,61 @@
+import java.util.Scanner;
 
 public class Conta {
+
+	static Scanner sc = new Scanner(System.in);
 
 	private double saldo;
 	private String titular, senha;
 	private boolean status;
 	private int numero;
 
-	public void saque() {
+	public static void saque(int conta, int opcao) {
+		System.out.print("QUANTO VOCÊ DESEJA SACAR? ");
+		double saque = sc.nextDouble();
+
+		switch (opcao) {
+		case 1:
+			if (Corrente.listaCorrente.get(conta).getSaldo() < saque) {
+				System.out.println("VOCÊ NÃO TEM ESSE VALOR!");
+			} else {
+				Corrente.listaCorrente.get(conta).setSaldo(Corrente.listaCorrente.get(conta).getSaldo() - saque);
+				System.out.println("\nVOCÊ SACOU R$" + saque + '\n');
+
+			}
+			break;
+		case 2:
+			if (Credito.listaCredito.get(conta).getSaldo() < saque) {
+				System.out.println("VOCÊ NÃO TEM ESSE VALOR!");
+			} else {
+				Credito.listaCredito.get(conta).setSaldo(Credito.listaCredito.get(conta).getSaldo() - saque);
+				System.out.println("\nVOCÊ SACOU R$" + saque + '\n');
+			}
+			break;
+		case 3:
+			System.out.println("POUPANCA");
+			if (Poupanca.listaPoupanca.get(conta).getSaldo() < saque) {
+				System.out.println("VOCÊ NÃO TEM ESSE VALOR!");
+			} else {
+				Poupanca.listaPoupanca.get(conta).setSaldo(Poupanca.listaPoupanca.get(conta).getSaldo() - saque);
+				System.out.println("\nVOCÊ SACOU R$" + saque + '\n');
+			}
+			break;
+		}
 	}
 
-	public void saldo() {
+	public static void saldo(int conta, int opcao) {
+		switch (opcao) {
+		case 1:
+			System.out.println("\nSALDO: R$" + Corrente.listaCorrente.get(conta).getSaldo() + "\n");
+			break;
+		case 2:
+			System.out.println("\nSALDO: R$" + Credito.listaCredito.get(conta).getSaldo() + "\n");
+			break;
+		case 3:
+			System.out.println("\nSALDO: R$" + Poupanca.listaPoupanca.get(conta).getSaldo() + "\n");
+			break;
+		}
 	}
-	
-	
 
 	public Conta() {
 		super();
@@ -20,7 +63,8 @@ public class Conta {
 
 	@Override
 	public String toString() {
-		return "TITULAR: " + titular + "\nNUMERO: " + numero +"\nSALDO: R$" + saldo +"\nSENHA: " + senha + "\nSTATUS: " + status;
+		return 		"------------------\n" + "TITULAR: " + titular + "\nNUMERO: " + numero + "\nSALDO: R$" + saldo + "\nSENHA: " + senha
+				+ "\nSTATUS: " + status;
 	}
 
 	public Conta(double saldo, String titular, String senha, boolean status, int numero) {
@@ -56,7 +100,7 @@ public class Conta {
 		this.senha = senha;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
